@@ -1,57 +1,343 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <title>d9 Official Website</title>
-    <meta charset="UTF-8">
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <style>
-        /* Consolidate CSS into one block */
-        a:link, a:visited {
-            color: blue;
-            background-color: transparent;
-            text-decoration: none;
-        }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Your Name — Portfolio & Blog</title>
 
-        a:hover, a:active {
-            color: yellow;
-            background-color: transparent;
-            text-decoration: none;
-        }
+  <!-- Google font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
-        h1 {
-            text-align: center;
-            color: white;
-            font-family: Arial;
-        }
+  <meta name="description" content="Personal site — portfolio, CV and blog." />
 
-        p {
-            font-size: 135%;
-            font-family: courier;
-            color: white;
-        }
-
-        body {
-            background-image: url('https://github.com/Kasudo/d9Team/edit/main/index.html#L34C70');
-        }
-    </style>
-    <!-- External CSS -->
-    <link rel="stylesheet" type="text/css" href="RickRoll Button.css">
+  <style>
+    :root{
+      --bg:#0b0b0d;
+      --card:#111118;
+      --muted:#a8a8b3;
+      --accent1:#ff2d95;
+      --accent2:#5c6cff;
+      --glass: rgba(255,255,255,0.03);
+      --glass-2: rgba(255,255,255,0.02);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;color:#e8e8ee;background:linear-gradient(180deg,#050506 0%, #0b0b0d 100%);}
+    a{color:inherit;text-decoration:none}
+    header{
+      position:sticky;top:0;z-index:40;
+      backdrop-filter: blur(6px);
+      background: linear-gradient(180deg, rgba(11,11,13,0.6), rgba(11,11,13,0.45));
+      border-bottom:1px solid rgba(255,255,255,0.03);
+    }
+    .container{max-width:1100px;margin:0 auto;padding:28px 20px}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo {
+      width:46px;height:46px;border-radius:10px;
+      background: linear-gradient(135deg,var(--accent2),var(--accent1));
+      box-shadow: 0 6px 22px rgba(92,108,255,0.12), 0 2px 8px rgba(255,45,149,0.08);
+      display:flex;align-items:center;justify-content:center;color:white;font-weight:700;
+      font-size:18px;
+    }
+    nav ul{display:flex;gap:14px;align-items:center;margin:0;padding:0;list-style:none}
+    nav a{padding:8px 12px;border-radius:8px;color:var(--muted);font-weight:600;font-size:14px}
+    nav a:hover{color:white;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))}
+    .cta{background:linear-gradient(90deg,var(--accent2),var(--accent1));padding:8px 14px;border-radius:10px;color:white;font-weight:700;box-shadow:0 8px 30px rgba(92,108,255,0.08)}
+    /* Hero */
+    .hero{min-height:66vh;display:flex;align-items:center}
+    .hero-grid{display:grid;grid-template-columns:1fr 360px;gap:40px;align-items:center}
+    .intro h1{margin:0;font-size:42px;line-height:1.02}
+    .intro p{color:var(--muted);margin-top:14px;max-width:60ch}
+    .profile-card{
+      background:linear-gradient(180deg,var(--card), #0f0f14);
+      padding:24px;border-radius:16px;box-shadow: 0 12px 34px rgba(0,0,0,0.6);
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    .profile-pic{
+      height:110px;width:110px;border-radius:12px;background:linear-gradient(135deg,var(--accent1),var(--accent2));
+      display:block;margin-bottom:14px;
+    }
+    .skills{display:flex;flex-direction:column;gap:12px;margin-top:10px}
+    .skill{display:flex;justify-content:space-between;gap:10px;align-items:center}
+    .bar{height:10px;background:var(--glass);border-radius:999px;flex:1;margin-left:12px;overflow:hidden}
+    .bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent1));border-radius:999px}
+    /* Sections */
+    section{padding:48px 0;border-top:1px solid rgba(255,255,255,0.02)}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.02);box-shadow:0 8px 24px rgba(2,2,6,0.6)}
+    .card h3{margin:0 0 6px 0}
+    .project-thumb{height:140px;border-radius:10px;background:linear-gradient(135deg,rgba(92,108,255,0.12),rgba(255,45,149,0.07));display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:700}
+    /* Blog list */
+    .blog-list{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    .post{display:flex;gap:14px;align-items:flex-start}
+    .post .meta{font-size:13px;color:var(--muted)}
+    .post .title{font-weight:700;margin:0}
+    /* Footer */
+    footer{padding:30px 0;color:var(--muted);font-size:14px}
+    /* Responsive */
+    @media (max-width:900px){
+      .hero-grid{grid-template-columns:1fr;gap:22px}
+      .grid{grid-template-columns:repeat(2,1fr)}
+      .blog-list{grid-template-columns:1fr}
+    }
+    @media (max-width:560px){
+      nav ul{display:none}
+      .container{padding:18px}
+      .grid{grid-template-columns:1fr}
+    }
+    /* small niceties */
+    .glow{
+      box-shadow: 0 10px 36px rgba(92,108,255,0.12), 0 4px 18px rgba(255,45,149,0.06);
+    }
+    .muted{color:var(--muted)}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:var(--glass-2);font-weight:600}
+  </style>
 </head>
 <body>
 
-<div class="wrapper">
-    <section id='steezy'>
-        <h1>Team Founders: d9_Kasudo & d9_Pex</h1>
-        <p><strong>The d9 team was founded by "d9_Kasudo" & "d9_Pex in 2020 and was originally a League of Legends team. It expanded to Valorant and soon on racing 
-                simulators like Gran Turismo, Forza Motorsport, and MotoGP. Other ideas to execute in the future are FIFA and Fighting games like Tekken and Mortal Kombat. Members got in and left and now, it's just the founders, more to come soon!</strong></p>
-        <p><strong>Alhamdulillah x3
-                   Astaghfirullah x3
-                   La Ilaha Illa Allah x3</strong></p>
-    </section>
-</div>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo">YN</div>
+        <div>
+          <div style="font-weight:700;">Your Name</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px">Developer · Designer · Writer</div>
+        </div>
+      </div>
 
-<!-- Buttons -->
-<button class="button-85" role="button"><a href="http://kasudojacked.atwebpages.com/Tetris.html">Play a game!</a></button>
+      <nav aria-label="Main navigation">
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#blog">Blog</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a class="cta" href="#resume">Resume</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" id="home">
+    <section class="hero" aria-label="Hero">
+      <div class="hero-grid">
+        <div class="intro">
+          <h1>Hi — I'm <span style="background:linear-gradient(90deg,var(--accent2),var(--accent1));-webkit-background-clip:text;color:transparent">Your Name</span>.</h1>
+          <p>I design and build digital things — web apps, visual identities, and written pieces. I blend design and code to create useful, polished products. This site is a mix of my CV, portfolio, and blog.</p>
+
+          <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap">
+            <a class="pill" href="#projects">See Projects</a>
+            <a class="pill" href="#blog">Read Blog</a>
+            <a class="pill" href="#contact" style="border:1px dashed rgba(255,255,255,0.04)">Get in touch</a>
+          </div>
+
+          <div style="margin-top:18px;color:var(--muted);font-size:14px">Location • Open to remote work</div>
+        </div>
+
+        <aside class="profile-card glow" aria-label="Profile card">
+          <div style="display:flex;gap:14px;align-items:center">
+            <div class="profile-pic" aria-hidden="true"></div>
+            <div>
+              <div style="font-weight:800;font-size:18px">Your Name</div>
+              <div style="color:var(--muted);font-size:13px;margin-top:6px">Frontend Engineer / Designer</div>
+            </div>
+          </div>
+
+          <div class="skills" style="margin-top:14px">
+            <div class="skill"><strong>HTML & CSS</strong><div class="bar" aria-hidden="true"><i style="width:92%"></i></div></div>
+            <div class="skill"><strong>JavaScript</strong><div class="bar" aria-hidden="true"><i style="width:82%"></i></div></div>
+            <div class="skill"><strong>Design</strong><div class="bar" aria-hidden="true"><i style="width:70%"></i></div></div>
+          </div>
+
+          <div style="margin-top:16px;display:flex;gap:10px;align-items:center">
+            <a class="cta" href="#projects" style="font-size:13px;padding:8px 12px">View Work</a>
+            <a href="#" onclick="downloadResume()" style="padding:8px 12px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.03);color:var(--muted);font-weight:700">Download Resume</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="about">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap">
+        <div style="max-width:720px">
+          <h2>About me</h2>
+          <p class="muted">I’m a developer and designer who likes to build clear, performant web experiences. I enjoy solving interface problems and writing about what I learn. Below are some of my recent projects and notes.</p>
+          <p style="margin-top:10px">I’ve worked on product teams and freelance projects. I focus on front-end engineering, UI/UX, and writing technical posts that explain concepts simply.</p>
+        </div>
+
+        <div style="min-width:220px">
+          <h3 style="margin-bottom:6px">Quick facts</h3>
+          <div class="card" style="padding:12px">
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <div><strong>Experience</strong>: 4+ yrs</div>
+              <div><strong>Available</strong>: Open to freelance & remote</div>
+              <div><strong>Email</strong>: <a href="mailto:you@example.com">you@example.com</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2>Selected Projects</h2>
+      <div class="grid" style="margin-top:16px">
+        <article class="card">
+          <div class="project-thumb">Project A</div>
+          <h3 style="margin-top:12px">Project Title A</h3>
+          <p class="muted">Brief description: what it does, tech used, outcome.</p>
+          <div style="margin-top:8px"><a href="#" class="pill">Live</a> <a href="#" class="pill">Repo</a></div>
+        </article>
+
+        <article class="card">
+          <div class="project-thumb">Project B</div>
+          <h3 style="margin-top:12px">Project Title B</h3>
+          <p class="muted">A short blurb about the project, the role you had, and the result.</p>
+          <div style="margin-top:8px"><a href="#" class="pill">Live</a> <a href="#" class="pill">Case study</a></div>
+        </article>
+
+        <article class="card">
+          <div class="project-thumb">Project C</div>
+          <h3 style="margin-top:12px">Project Title C</h3>
+          <p class="muted">Describe the project and highlight any measurable outcomes (e.g., reduced load time by X).</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="blog">
+      <h2>Blog — Notes & Writing</h2>
+      <div style="margin-top:12px;color:var(--muted)">Short posts and tutorials. Click to read.</div>
+
+      <div class="blog-list" id="postsContainer" style="margin-top:18px">
+        <!-- posts will be injected here -->
+      </div>
+
+      <div style="margin-top:18px">
+        <a href="#contact" class="pill">Pitch a topic</a>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <div style="display:grid;grid-template-columns:1fr 360px;gap:18px;margin-top:12px">
+        <div>
+          <p class="muted">Want to collaborate? Send a message — or email me directly.</p>
+
+          <form id="contactForm" style="display:flex;flex-direction:column;gap:10px;margin-top:10px" onsubmit="submitContact(event)">
+            <input name="name" placeholder="Your name" required style="padding:10px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.03);color:white">
+            <input name="email" type="email" placeholder="Email" required style="padding:10px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.03);color:white">
+            <textarea name="message" placeholder="Message" rows="5" required style="padding:10px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.03);color:white"></textarea>
+            <div style="display:flex;gap:10px">
+              <button class="cta" type="submit">Send message</button>
+              <a href="mailto:you@example.com" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);display:inline-flex;align-items:center">Or email</a>
+            </div>
+            <div id="contactResult" style="color:var(--muted);font-size:13px"></div>
+          </form>
+        </div>
+
+        <aside class="card">
+          <h3>Let's connect</h3>
+          <p class="muted">Find me on:</p>
+          <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+            <a class="pill" href="#" target="_blank">GitHub</a>
+            <a class="pill" href="#" target="_blank">LinkedIn</a>
+            <a class="pill" href="#" target="_blank">Twitter</a>
+          </div>
+
+          <div style="margin-top:14px">
+            <h4 style="margin:0 0 8px 0">Resume</h4>
+            <p class="muted" style="margin:0 0 10px 0">Download a PDF version of my CV.</p>
+            <a class="cta" id="resume" href="#" onclick="downloadResume()">Download Resume</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <footer style="margin-top:30px">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <div>© <strong>Your Name</strong> — <span class="muted">Built with ❤️ and coffee</span></div>
+        <div class="muted">Designed for clarity · <a href="#contact">Contact</a></div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    // Simple demo posts array. Edit or add posts here:
+    const posts = [
+      {
+        id: 'how-to-css',
+        title: 'How to write scalable CSS',
+        date: '2025-06-01',
+        desc: 'Tips for organizing styles in medium-large projects.',
+        url: '#',
+      },
+      {
+        id: 'build-a-landing',
+        title: 'Designing a landing page that converts',
+        date: '2025-05-08',
+        desc: 'A short guide with structure and copy tips.',
+        url: '#',
+      },
+      {
+        id: 'notes-on-performance',
+        title: 'Frontend performance: quick wins',
+        date: '2025-04-11',
+        desc: 'Small changes with big impact on load times.',
+        url: '#',
+      }
+    ];
+
+    // Render posts:
+    const postsContainer = document.getElementById('postsContainer');
+    function renderPosts(){
+      postsContainer.innerHTML = posts.map(p => `
+        <article class="card post" aria-labelledby="${p.id}">
+          <div style="width:8px;height:60px;border-radius:6px;background:linear-gradient(180deg,var(--accent2),var(--accent1));"></div>
+          <div>
+            <div class="meta">${p.date} • <span class="muted">3 min read</span></div>
+            <h3 id="${p.id}" class="title"><a href="${p.url}">${p.title}</a></h3>
+            <p class="muted" style="margin-top:6px">${p.desc}</p>
+          </div>
+        </article>
+      `).join('');
+    }
+    renderPosts();
+
+    // Contact form fallback: open mailto with content:
+    function submitContact(e){
+      e.preventDefault();
+      const f = e.target;
+      const name = encodeURIComponent(f.name.value.trim());
+      const email = encodeURIComponent(f.email.value.trim());
+      const message = encodeURIComponent(f.message.value.trim());
+      const subject = encodeURIComponent('Contact from portfolio site: ' + (f.name.value || ''));
+      const body = encodeURIComponent(`Name: ${f.name.value}\nEmail: ${f.email.value}\n\n${f.message.value}`);
+      const mailto = `mailto:you@example.com?subject=${subject}&body=${body}`;
+      // Try to open a mail client:
+      window.location.href = mailto;
+      document.getElementById('contactResult').textContent = 'Opening your email client...';
+    }
+
+    // Resume placeholder download (replace URL with your real PDF link)
+    function downloadResume(){
+      const url = 'https://example.com/your-resume.pdf'; // <- EDIT this to your resume file
+      window.open(url, '_blank');
+    }
+
+    // Smooth scrolling for anchors
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const href = a.getAttribute('href');
+        if(!href || href === '#') return;
+        const el = document.querySelector(href);
+        if(el){
+          e.preventDefault();
+          el.scrollIntoView({behavior:'smooth', block:'start'});
+        }
+      })
+    });
+
+    // small: detect mobile and reveal nav on click (if you want)
+  </script>
 
 </body>
 </html>
